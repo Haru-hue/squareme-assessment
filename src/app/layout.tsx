@@ -2,6 +2,7 @@
 import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import LayoutView from "./view";
 const queryClient = new QueryClient();
 
 export default function RootLayout({
@@ -12,9 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
-        <ChakraProvider>
-          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-        </ChakraProvider>
+        <LayoutView>
+          <ChakraProvider>
+            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+          </ChakraProvider>
+        </LayoutView>
       </body>
     </html>
   );
