@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -13,11 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
-        <LayoutView>
-          <ChakraProvider>
-            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-          </ChakraProvider>
-        </LayoutView>
+        <ChakraProvider>
+          <QueryClientProvider client={queryClient}>
+            <LayoutView>{children}</LayoutView>
+          </QueryClientProvider>
+        </ChakraProvider>
       </body>
     </html>
   );

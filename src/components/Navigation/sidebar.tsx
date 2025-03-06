@@ -1,5 +1,18 @@
-import { DashboardIcon, GlobeIcon, SettingsIcon, TransactionIcon, TransferIcon, WalletIcon } from "@/assets";
-import { Box, Flex, List, ListItem, Link as ChakraLink } from "@chakra-ui/react";
+import {
+  DashboardIcon,
+  GlobeIcon,
+  SettingsIcon,
+  TransactionIcon,
+  TransferIcon,
+  WalletIcon,
+} from "@/assets";
+import {
+  Box,
+  Flex,
+  List,
+  ListItem,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 
 const SideBar = () => {
@@ -14,11 +27,20 @@ const SideBar = () => {
   ];
 
   return (
-    <Box display={{ base: "none", md: "flex" }} position="fixed" flexDirection="column" minW="263px" minH="100vh" bg="white" borderRight="1px" borderColor="#E6EAEE">
+    <Box
+      display={{ base: "none", md: "flex" }}
+      position="fixed"
+      flexDirection="column"
+      minW="263px"
+      minH="100vh"
+      bg="white"
+      borderRight="1px"
+      borderColor="#E6EAEE"
+    >
       <Flex w="full" h="full">
         <List w="full" pt="32px">
           {sideNav.map((item) => (
-            <ListItem key={item.name} w="full" h="full">
+            <ListItem key={item.name} w="full" maxH="max-content">
               <ChakraLink
                 href={`/${item.link}`}
                 display="flex"
@@ -30,8 +52,19 @@ const SideBar = () => {
                 w="full"
                 textTransform="capitalize"
                 fontSize="15px"
-                bg={pathname === `/${item.link}` || pathname === item.link ? "#3976E8" : "transparent"}
-                color={pathname === `/${item.link}` || pathname === item.link ? "white" : "#04004D"}
+                bg={
+                  pathname === `/${item.link}` || pathname === item.link
+                    ? "#3976E8"
+                    : "transparent"
+                }
+                color={
+                  pathname === `/${item.link}` || pathname === item.link
+                    ? "white"
+                    : "#04004D"
+                }
+                _hover={{
+                  textDecor: "none",
+                }}
               >
                 <Box as="span">{item.icon}</Box>
                 <Box as="span">{item?.name}</Box>

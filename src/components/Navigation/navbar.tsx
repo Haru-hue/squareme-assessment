@@ -32,10 +32,7 @@ const Navbar = () => {
 
   return (
     <Box
-      as="nav"
-      w="full"
-      maxW="1440px"
-      mx="auto"
+      w='100%'
       h="20"
       bg="white"
       color="black"
@@ -48,7 +45,7 @@ const Navbar = () => {
       <Flex justify="space-between" align="center" h="full">
         <IconButton
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          display={{ base: "block", md: "none" }}
+          display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
           aria-label="menu"
         />
