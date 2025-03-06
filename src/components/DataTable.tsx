@@ -27,7 +27,7 @@ const DataTable = ({
 
   // Ensure type safety with optional chaining
   const formattedData =
-    transactions?.map((item?: TransactionApiResponse) => ({
+    transactions?.map((item) => ({
       id: typeof item?.id === "string" ? item?.id : item?.id?.$oid || "",
       amount: item?.amount || 0,
       transaction_id: `TR_${
