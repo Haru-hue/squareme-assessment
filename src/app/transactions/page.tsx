@@ -71,25 +71,17 @@ const Transactions = () => {
   return (
     <Box w="full" bg="#FFF" pb="38px">
       <Flex
-        direction={{ base: "column", md: "row" }}
-        align="start"
-        justify="space-between"
-        w="full"
-        h={{ md: "91.72px" }}
-      >
-        {/* desktop */}
-        <Flex
           borderBottom="2px solid"
           borderColor="#E6EAEE"
           boxShadow="sm"
-          justify="space-between"
+          justify={{ base: 'end', md: "space-between"}}
           w="full"
           align="center"
-          minW={{ md: "calc(100vw - 263px)" }}
+          minW={{ lg: "calc(100vw - 263px)" }}
           px={{ base: 4, md: 10 }}
           pt="24px"
           pb="16px"
-          flexWrap="wrap"
+ 
         >
           <Select
             name="filter"
@@ -101,15 +93,17 @@ const Transactions = () => {
             minW="max-content"
             fontSize="16px"
             fontWeight={500}
-            pos="relative"
-            mb={{ base: "-2.5rem", md: "unset" }}
+            pos={{ base: 'absolute', md: 'unset' }}
+            mb={{ base: "2.5rem", md: "unset" }}
+            left={6}
           >
             <option value="">All Accounts</option>
             <option value="">Transactions</option>
             <option value="">Last 30 days</option>
           </Select>
           <Flex
-            w="auto"
+            w="full"
+            maxW='max-content'
             align="center"
             gap={4}
             justify="end"
@@ -167,7 +161,6 @@ const Transactions = () => {
             </CSVLink>
           </Flex>
         </Flex>
-      </Flex>
       <Box display={{ base: "none", lg: "flex" }} w="full" h="525px" mx="auto">
         <DataTable transactions={data} />
       </Box>

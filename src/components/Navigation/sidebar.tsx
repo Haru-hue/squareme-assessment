@@ -21,7 +21,11 @@ import {
 import { usePathname } from "next/navigation";
 
 const SideBar = ({ navbarModal }: { navbarModal: UseDisclosureProps }) => {
-  const [isMobile] = useMediaQuery("(max-width: 991px)");
+  const [isMobile] = useMediaQuery("(max-width: 991px)", {
+    fallback: false, // Default value during SSR
+    ssr: true, // Enable SSR support
+  });
+  
   const handleClose = navbarModal?.onClose ?? (() => {});
 
   return (
@@ -34,15 +38,18 @@ const SideBar = ({ navbarModal }: { navbarModal: UseDisclosureProps }) => {
           placement="left"
         >
           <DrawerOverlay />
-          <DrawerContent bg="white"
-          borderRight="1px solid"
-          borderColor="#E6EAEE">
+          <DrawerContent
+            bg="white"
+            borderRight="1px solid"
+            borderColor="#E6EAEE"
+            maxW="265px"
+          >
             <SideBarContent />
           </DrawerContent>
         </Drawer>
       ) : (
         <Box
-          position="fixed"
+          position={{ lg: "fixed" }}
           flexDirection="column"
           minW="263px"
           minH="100vh"
@@ -50,7 +57,7 @@ const SideBar = ({ navbarModal }: { navbarModal: UseDisclosureProps }) => {
           borderRight="1px solid"
           borderColor="#E6EAEE"
         >
-          <SideBarContent/>
+          <SideBarContent />
         </Box>
       )}
     </>
@@ -84,15 +91,9 @@ const SideBarContent = () => {
               w="full"
               textTransform="capitalize"
               fontSize="15px"
-              fontFamily='Inter'
-              bg={pathname === item.link
-                  ? "#3976E8"
-                  : "transparent"
-              }
-              color={pathname === item.link
-                  ? "white"
-                  : "#04004D"
-              }
+              fontFamily="Inter"
+              bg={pathname === item.link ? "#3976E8" : "transparent"}
+              color={pathname === item.link ? "white" : "#04004D"}
               _hover={{
                 textDecor: "none",
               }}

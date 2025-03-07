@@ -14,6 +14,7 @@ const LayoutView = ({ children }: { children: ReactNode }) => {
       h="full"
       fontFamily="Inter !important"
       bg="#FFF"
+      minH='100vh'
     >
       <Navbar navbarModal={navbarModal} />
       <Flex w="full" h="full" pt="20">
