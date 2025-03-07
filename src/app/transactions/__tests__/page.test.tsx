@@ -12,7 +12,11 @@ jest.mock("@/api/transaction", () => ({
 
 // Mock the CSVLink component
 jest.mock("react-csv", () => ({
-  CSVLink: jest.fn(({ children }) => <div>{children}</div>),
+  CSVLink: jest.fn(({ data, filename, children }) => (
+    <a href={`data:text/csv;charset=utf-8,${JSON.stringify(data)}`} download={filename}>
+      {children}
+    </a>
+  )),
 }));
 
 const queryClient = new QueryClient();
@@ -58,7 +62,7 @@ describe("Transactions Component", () => {
     const mockData = [
       {
         amount: 1000,
-        transaction_id: { $oid: "12345" },
+        transaction_id: "12345",
         transaction_type: "Credit",
         date: "2023-06-15",
         time: "12:00 PM",
@@ -72,5 +76,33 @@ describe("Transactions Component", () => {
       </QueryClientProvider>
     );
     expect(await screen.findByText(/₦1,000/i)).toBeInTheDocument();
+  });
+
+  it("renders CSVLink with correct data", async () => {
+    const mockData = [
+      {
+        amount: 1000,
+        transaction_id: "12345",
+        transaction_type: "Credit",
+        date: "2023-06-15",
+        time: "12:00 PM",
+        status: "Completed",
+      },
+    ];
+    (fetchTransactions as jest.Mock).mockResolvedValue(mockData);
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Transactions />
+      </QueryClientProvider>
+    );
+
+    await screen.findByText(/₦1,000/i); // Wait for data to load
+    expect(CSVLink).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: mockData,
+        filename: "transactions.csv", // Adjust filename if needed
+      }),
+      expect.anything()
+    );
   });
 });

@@ -2,11 +2,13 @@
 import "./globals.css";
 import '@mantine/core/styles.css';
 import { ChakraProvider } from "@chakra-ui/react";
+import { Provider as ReduxProvider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MantineProvider } from '@mantine/core';
 import LayoutView from "./view";
 import customTheme from "@/theme";
 import Head from "next/head";
+import { store } from "@/store";
 
 const queryClient = new QueryClient();
 
@@ -25,9 +27,11 @@ export default function RootLayout({
       <body className="antialiased">
         <ChakraProvider theme={customTheme}>
           <MantineProvider>
-            <QueryClientProvider client={queryClient}>
-              <LayoutView>{children}</LayoutView>
-            </QueryClientProvider>
+            <ReduxProvider store={store}>
+              <QueryClientProvider client={queryClient}>
+                <LayoutView>{children}</LayoutView>
+              </QueryClientProvider>
+            </ReduxProvider>
           </MantineProvider>
         </ChakraProvider>
       </body>

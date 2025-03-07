@@ -17,13 +17,12 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "@/api/transaction";
 import Loader from "@/components/Loader";
 import { CSVLink } from "react-csv";
+import { useAppSelector } from "@/store/hooks";
 const Transactions = () => {
-  const { data, error, isError, isLoading } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactions,
-    staleTime: 60 * 1000, // 1 minute
-    refetchInterval: 60 * 1000, // 1 minute
-  });
+  const state = useAppSelector((state) => state.transactions)  
+  const isLoading = state.transactions.status === "loading"
+  const isError = state.transactions.status === "error"
+  const data = state.transactions.data
 
   if (isLoading)
     return (
