@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBarChartData } from "@/api/transaction";
-import Image from "next/image";
+import { BsCopy } from "react-icons/bs";
 import { useState } from "react";
 import Loader from "@/components/Loader";
 import { BarChart } from "@/components/BarChart";
@@ -28,7 +28,7 @@ export default function Home() {
 
   if (isLoading)
     return (
-      <Center>
+      <Center h='100vh'>
         <Loader />
       </Center>
     );
@@ -63,7 +63,7 @@ export default function Home() {
   }
 
   return (
-    <Box w="full" h="full" py={12}>
+    <Box w="full" h="full" py={{ base: 6, lg: 12 }} px={6}>
       <Flex
         w="full"
         borderBottom="1px solid"
@@ -106,8 +106,7 @@ export default function Home() {
                 bg="#9F56D433"
                 color="#9F56D4"
                 rounded="md"
-                leftIcon={
-                  <Image src="/copy.svg" width={16} height={16} alt="copy" />
+                leftIcon={<BsCopy color="#9F56D4" />
                 }
               >
                 Copy
@@ -118,8 +117,8 @@ export default function Home() {
             </Text>
           </Box>
         </Box>
-        <Box
-          display={{ base: "none", md: "block" }}
+        <Stack
+          display={{ base: "none", lg: "flex" }}
           bg="#FAFAFA"
           border="1px"
           borderColor="#E4E4E7"
@@ -200,13 +199,12 @@ export default function Home() {
               <BarChart value={data ?? []} />
             </Box>
           </Box>
-        </Box>
+        </Stack>
       </Stack>
 
       {/* mobile */}
-      <Box
-        display={{ base: "flex", md: "none" }}
-        w="336px"
+      <Stack
+        display={{ lg: "none" }}
         mx="auto"
         h="279px"
         bg="white"
@@ -218,11 +216,12 @@ export default function Home() {
         <Flex justify="space-between" w="full" mb={4}>
           <Text>Revenue</Text>
           <Select
-            w="80px"
-            h="25px"
+            h="30px"
             fontSize="xs"
+            border='1px solid'
             borderColor="#C4C8D3"
-            rounded="md"
+            rounded="full"
+            maxW='max-content'
           >
             <option value="weekly">Weekly</option>
             <option value="Last 7 days">Last 7 days</option>
@@ -232,7 +231,7 @@ export default function Home() {
         <Box w="full" h="full">
           <BarChart value={data ?? []} />
         </Box>
-      </Box>
+      </Stack>
     </Box>
   );
 }

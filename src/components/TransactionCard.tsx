@@ -22,8 +22,8 @@ const TransactionCard = ({ details }: { details: TransactionDetails }) => {
           alignItems="center"
           px={2}
         >
-          <Text fontSize="xs">Amount:</Text>
-          <Text fontSize="xs">₦ {details?.amount}</Text>
+          <Text fontSize={{ base: '12px', md: '14px' }}>Amount:</Text>
+          <Text fontSize={{ base: '12px', md: '14px' }}>₦ {details?.amount?.toLocaleString()}</Text>
         </Flex>
         <Box
           borderBottomWidth="1px"
@@ -33,8 +33,8 @@ const TransactionCard = ({ details }: { details: TransactionDetails }) => {
           alignItems="center"
           px={2}
         >
-          <Text fontSize="xs">Transaction type:</Text>
-          <Text fontSize="xs">{details?.transaction_type}</Text>
+          <Text fontSize={{ base: '12px', md: '14px' }}>Transaction type:</Text>
+          <Text fontSize={{ base: '12px', md: '14px' }}>{details?.transaction_type}</Text>
         </Box>
         <Box
           borderBottomWidth="1px"
@@ -44,8 +44,8 @@ const TransactionCard = ({ details }: { details: TransactionDetails }) => {
           alignItems="center"
           px={2}
         >
-          <Text fontSize="xs">Date:</Text>
-          <Text fontSize="xs">
+          <Text fontSize={{ base: '12px', md: '14px' }}>Date:</Text>
+          <Text fontSize={{ base: '12px', md: '14px' }}>
             {`${formatDate(details?.date ?? "")} ${details?.time}`.trim()}
           </Text>
         </Box>
@@ -56,7 +56,7 @@ const TransactionCard = ({ details }: { details: TransactionDetails }) => {
           alignItems="center"
           px={2}
         >
-          <Text fontSize="xs">Status:</Text>
+          <Text fontSize={{ base: '12px', md: '14px' }}>Status:</Text>
           <Box
             display="inline-flex"
             alignItems="center"
@@ -66,12 +66,13 @@ const TransactionCard = ({ details }: { details: TransactionDetails }) => {
             py={1}
             rounded="full"
             borderWidth="1px"
-            fontSize="xs"
+            fontSize={{ base: '12px', md: '14px' }}
             color={details?.status === "processed" ? "#5DC090" : "#F14156"}
             bg={details?.status === "processed" ? "#EFFDED" : "#FEECEE"}
             borderColor={
               details?.status === "processed" ? "#5DC090" : "#F14156"
             }
+            textTransform='capitalize'
           >
             <Box w={2} h={2} rounded="full" bg="currentColor" mr={2} />
             {details?.status}

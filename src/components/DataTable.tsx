@@ -10,6 +10,7 @@ import {
   Thead,
   Tr,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import { formatDate } from "@/utils/formatDate";
 import { Pagination } from "@mantine/core";
@@ -182,7 +183,7 @@ const DataTable = ({ transactions }: { transactions: TransactionApiResponse[] })
           ))}
         </Tbody>
       </Table>
-      <Box display="flex" justifyContent="space-between" mt={4}>
+      <Flex w='full' justify="space-between" mt={4}>
         <Text>{`Showing ${currentPage * itemsPerPage} of ${
           formattedData?.length
         } results`}</Text>
@@ -192,8 +193,13 @@ const DataTable = ({ transactions }: { transactions: TransactionApiResponse[] })
           dotsIcon={HiMiniChevronDoubleRight}
           siblings={0}
           boundaries={1}
+          classNames={{
+            control:
+              "border border-gray-300 rounded-md w-[32px] h-[32px] px-3 py-1 transition-all",
+            dots: "border border-gray-300  rounded-md w-[32px] h-[32px] transition-all",
+          }}
         /> 
-      </Box>
+      </Flex>
     </Box>
   );
 };
