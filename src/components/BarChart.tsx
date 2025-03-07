@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
-import { Box } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 
 export interface ChartData {
   month: string;
@@ -99,22 +99,28 @@ export function BarChart({ value }: { value: ChartData[] }) {
 
   return (
     <>
-      <Box display={{ base: "block", sm: "none" }}>
+      <Stack w='full' h='full' display={{ base: "flex", lg: "none" }}>
         <Bar
           options={options}
           data={data}
-          width={"336px"}
-          height={"209.51px"}
+          width='100%'
+          height='100%'
+          style={{
+            maxHeight: '20rem'
+          }}
         />
-      </Box>
-      <Box display={{ base: "none", sm: "block" }}>
+      </Stack>
+      <Stack w='full' h='full' maxW='full' display={{ base: "none", lg: "block" }}>
         <Bar
           options={options}
           data={data}
-          width={"932px"}
-          height={"209.51px"}
+          width='100%'
+          height='100%'
+          style={{
+            maxHeight: '17.5rem'
+          }}
         />
-      </Box>
+      </Stack>
     </>
   );
 }

@@ -59,7 +59,7 @@ export default function Home() {
   }
 
   return (
-    <Box w="full" h="full" py={{ base: 6, lg: 12 }} px={6}>
+    <Stack flex={1} w="full" h="full" py={{ base: 6, lg: 12 }} px={6} maxW='full'>
       <Flex
         w="full"
         borderBottom="1px solid"
@@ -120,6 +120,7 @@ export default function Home() {
           rounded="lg"
           p={6}
           w="full"
+          maxW='100%'
         >
           <Flex justify="space-between" mb={6}>
             <HStack spacing={6}>
@@ -200,13 +201,13 @@ export default function Home() {
       {/* mobile */}
       <Stack
         display={{ lg: "none" }}
-        mx="auto"
-        h="279px"
+        w='full'
         bg="white"
         border="1px"
         borderColor="#C4C8D3"
         rounded="md"
         p={4}
+        maxW='full'
       >
         <Flex justify="space-between" w="full" mb={4}>
           <Text>Revenue</Text>
@@ -223,10 +224,10 @@ export default function Home() {
             <option value="Last 30 days">Last 30 days</option>
           </Select>
         </Flex>
-        <Box w="full" h="full">
+        <Stack w="full" h="full" maxW='full'>
           <BarChart value={data ?? []} />
-        </Box>
+        </Stack>
       </Stack>
-    </Box>
+    </Stack>
   );
 }
