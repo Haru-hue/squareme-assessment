@@ -1,6 +1,5 @@
 import "./globals.css";
 import "@mantine/core/styles.css";
-import Head from "next/head";
 import React from "react";
 import Provider from "./provider";
 import { Metadata } from "next";
