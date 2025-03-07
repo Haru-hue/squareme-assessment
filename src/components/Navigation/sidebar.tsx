@@ -64,7 +64,7 @@ const SideBarContent = () => {
     { name: "dashboard", icon: <DashboardIcon />, link: "#" },
     { name: "accounts", icon: <WalletIcon />, link: "#" },
     { name: "transfers", icon: <TransferIcon />, link: "#" },
-    { name: "transactions", icon: <TransactionIcon />, link: "transactions" },
+    { name: "transactions", icon: <TransactionIcon />, link: "/transactions" },
     { name: "settings", icon: <SettingsIcon />, link: "#" },
   ];
 
@@ -74,7 +74,7 @@ const SideBarContent = () => {
         {sideNav.map((item) => (
           <ListItem key={item.name} w="full" maxH="max-content">
             <ChakraLink
-              href={`/${item.link}`}
+              href={item.link}
               display="flex"
               alignItems="center"
               justifyContent="start"
@@ -85,13 +85,11 @@ const SideBarContent = () => {
               textTransform="capitalize"
               fontSize="15px"
               fontFamily='Inter'
-              bg={
-                pathname === `/${item.link}` || pathname === item.link
+              bg={pathname === item.link
                   ? "#3976E8"
                   : "transparent"
               }
-              color={
-                pathname === `/${item.link}` || pathname === item.link
+              color={pathname === item.link
                   ? "white"
                   : "#04004D"
               }

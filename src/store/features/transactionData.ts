@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "@/api/transaction";
 interface TransactionState {
   data: TransactionApiResponse[]
@@ -16,14 +15,8 @@ const initialState: TransactionState = {
 export const fetchTransactionsData = createAsyncThunk(
   "data/fetchTransactionsData",
   async () => {
-    const TRANSACTIONS_QUERY = useQuery({
-      queryKey: ["transactions"],
-      queryFn: fetchTransactions,
-      staleTime: 60 * 1000, // 1 minute
-      refetchInterval: 60 * 1000, // 1 minute
-    });
-
-    return TRANSACTIONS_QUERY
+    const response = await fetchTransactions();
+    return response;
   }
 );
 
@@ -43,7 +36,7 @@ const transactionSlice = createSlice({
       })
       .addCase(fetchTransactionsData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload.data;
+        state.data = action.payload;
       })
       .addCase(fetchTransactionsData.rejected, (state, action) => {
         state.status = "failed";

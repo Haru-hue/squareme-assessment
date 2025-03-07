@@ -1,16 +1,13 @@
-"use client";
 import "./globals.css";
-import '@mantine/core/styles.css';
-import { ChakraProvider } from "@chakra-ui/react";
-import { Provider as ReduxProvider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MantineProvider } from '@mantine/core';
-import LayoutView from "./view";
-import customTheme from "@/theme";
+import "@mantine/core/styles.css";
 import Head from "next/head";
-import { store } from "@/store";
+import React from "react";
+import Provider from "./provider";
+import { Metadata } from "next";
 
-const queryClient = new QueryClient();
+export const metadata: Metadata = {
+  title: "Joshua Uko - SquareMe Assessment"
+}
 
 export default function RootLayout({
   children,
@@ -19,21 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
-        <title>Joshua Uko - Squareme Assessment</title>
-        <meta name="description" content="This is my app description" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
       <body className="antialiased">
-        <ChakraProvider theme={customTheme}>
-          <MantineProvider>
-            <ReduxProvider store={store}>
-              <QueryClientProvider client={queryClient}>
-                <LayoutView>{children}</LayoutView>
-              </QueryClientProvider>
-            </ReduxProvider>
-          </MantineProvider>
-        </ChakraProvider>
+      <Provider>{children}</Provider>
+
       </body>
     </html>
   );

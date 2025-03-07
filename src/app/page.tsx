@@ -10,8 +10,6 @@ import {
   Button,
   Stack,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchBarChartData } from "@/api/transaction";
 import { BsCopy } from "react-icons/bs";
 import { useState } from "react";
 import Loader from "@/components/Loader";
@@ -34,11 +32,8 @@ export default function Home() {
       </Center>
     );
 
-  if (error) {
-    const errorMessage =
-      "status" in error
-        ? `Error: ${error.status}`
-        : error.message || "An unknown error occurred";
+    if (isError) {
+      const errorMessage = error?.message || "An unknown error occurred";
     return (
       <Center w="full" mt={4} p={4}>
         <VStack
