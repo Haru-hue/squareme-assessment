@@ -8,7 +8,7 @@ interface Transaction {
   status: string;
 }
 interface TransactionApiResponse {
-  id: { $oid: string }; // Assuming it's an object with an "$oid" property
+  id: { $oid?: string }; // Assuming it's an object with an "$oid" property
   amount: number;
   transaction_id: { $oid: string }; // Same assumption for transaction_id
   transaction_type: string;

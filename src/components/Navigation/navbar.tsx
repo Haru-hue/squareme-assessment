@@ -17,6 +17,8 @@ import {
   TransferIcon,
   WalletIcon,
 } from "@/assets";
+import NotificationIcon from "@/assets/bell.svg"
+import Logo from "@/assets/Logo.png"
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -88,11 +90,11 @@ const Navbar = () => {
           </Box>
         )}
 
-        <Image src="/logo.png" alt="logo" w="100px" h="24px" />
+        <Image src={Logo.src} alt="logo" />
 
         <Flex gap={{ base: "2", md: "4" }} align="center">
           <Image
-            src="/bell.svg"
+            src={NotificationIcon.src}
             alt="bell"
             w={{ base: "4", md: "24px" }}
             h={{ base: "4", md: "24px" }}

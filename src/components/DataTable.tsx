@@ -2,7 +2,6 @@
 import { useState } from "react";
 import {
   Box,
-  Center,
   Checkbox,
   Table,
   Tbody,
@@ -11,27 +10,22 @@ import {
   Thead,
   Tr,
   Text,
-  VStack,
 } from "@chakra-ui/react";
-import { HiMiniChevronDoubleRight } from "react-icons/hi2";
 import { formatDate } from "@/utils/formatDate";
-import Loader from "./Loader";
+import { Pagination } from "@mantine/core";
+import { HiMiniChevronDoubleRight } from "react-icons/hi2";
 
 // Ensure API response is properly typed
-const DataTable = ({
-  transactions,
-}: {
-  transactions: Transaction[];
-}) => {
+const DataTable = ({ transactions }: { transactions: TransactionApiResponse[] }) => {
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-
-  // Ensure type safety with optional chaining
   const formattedData =
     transactions?.map((item) => ({
       id: typeof item?.id === "string" ? item?.id : item?.id?.$oid || "",
       amount: item?.amount || 0,
       transaction_id: `TR_${
-        item?.transaction_id?.$oid || item?.transaction_id || ""
+        item?.transaction_id?.$oid as string || item?.transaction_id || ""
       }`,
       transaction_type: item?.transaction_type || "",
       date: item?.date || "",
@@ -39,19 +33,32 @@ const DataTable = ({
       status: item?.status || "",
     })) || [];
 
+    const itemsPerPage = 7
   // Pagination state
-  const [page, setPage] = useState<number>(1);
-  const pageSize = 7;
-  const totalPages = Math.ceil(formattedData.length / pageSize);
+
+  // Calculate paginated data
+  const totalPages = Math.ceil(formattedData.length / itemsPerPage);
   const paginatedData = formattedData.slice(
-    (page - 1) * pageSize,
-    page * pageSize
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
-  // Select All / Individual Selection
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Toggle row selection
   const allSelected =
     selectedRows.length === paginatedData.length && paginatedData.length > 0;
+
+  const toggleRowSelection = (id: string) => {
+    if (selectedRows.includes(id)) {
+      setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
+    } else {
+      setSelectedRows([...selectedRows, id]);
+    }
+  };
 
   const toggleSelectAll = () => {
     if (allSelected) {
@@ -61,34 +68,83 @@ const DataTable = ({
     }
   };
 
-  const toggleRowSelection = (id: string) => {
-    setSelectedRows((prev) =>
-      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
-    );
-  };
-
   return (
     <Box w="full" h="full" p={4}>
-      <Table variant="simple">
+      <Table>
         <Thead>
-          <Tr>
+          <Tr
+            fontFamily="Inter"
+            fontSize="12px"
+            fontWeight={600}
+            color="#84919A"
+          >
             <Th>
               <Checkbox
                 isChecked={allSelected}
                 onChange={toggleSelectAll}
+                rounded="10px"
               />
             </Th>
-            <Th>Amount</Th>
-            <Th>Transaction ID</Th>
-            <Th>Transaction Type</Th>
-            <Th>Date</Th>
-            <Th>Time</Th>
-            <Th>Status</Th>
+            <Th
+              fontFamily="Inter"
+              fontSize="12px"
+              fontWeight={600}
+              color="#84919A"
+            >
+              Amount
+            </Th>
+            <Th
+              fontFamily="Inter"
+              fontSize="12px"
+              fontWeight={600}
+              color="#84919A"
+            >
+              Transaction ID
+            </Th>
+            <Th
+              fontFamily="Inter"
+              fontSize="12px"
+              fontWeight={600}
+              color="#84919A"
+            >
+              Transaction Type
+            </Th>
+            <Th
+              fontFamily="Inter"
+              fontSize="12px"
+              fontWeight={600}
+              color="#84919A"
+            >
+              Date
+            </Th>
+            <Th
+              fontFamily="Inter"
+              fontSize="12px"
+              fontWeight={600}
+              color="#84919A"
+            >
+              Time
+            </Th>
+            <Th
+              fontFamily="Inter"
+              fontSize="12px"
+              fontWeight={600}
+              color="#84919A"
+            >
+              Status
+            </Th>
           </Tr>
         </Thead>
-        <Tbody>
-          {paginatedData.map((item) => (
-            <Tr key={item?.id}>
+        <Tbody
+          sx={{
+            border: "1px solid #EDEDF2",
+            boxShadow: "sm",
+            p: 6,
+            rounded: "10px",
+          }}
+        >
+          {paginatedData.map((item, idx) => (
+            <Tr key={idx}>
               <Td>
                 <Checkbox
                   isChecked={item?.id ? selectedRows.includes(item.id) : false}
@@ -111,23 +167,14 @@ const DataTable = ({
                   rounded="full"
                   borderWidth="1px"
                   fontSize="xs"
-                  color={
-                    item?.status === "processed" ? "#5DC090" : "#F14156"
-                  }
-                  bg={
-                    item?.status === "processed" ? "#EFFDED" : "#FEECEE"
-                  }
+                  color={item?.status === "processed" ? "#5DC090" : "#F14156"}
+                  bg={item?.status === "processed" ? "#EFFDED" : "#FEECEE"}
                   borderColor={
                     item?.status === "processed" ? "#5DC090" : "#F14156"
                   }
+                  textTransform="capitalize"
                 >
-                  <Box
-                    w={2}
-                    h={2}
-                    rounded="full"
-                    bg="currentColor"
-                    mr={2}
-                  />
+                  <Box w={2} h={2} rounded="full" bg="currentColor" mr={2} />
                   {item?.status}
                 </Box>
               </Td>
@@ -136,18 +183,19 @@ const DataTable = ({
         </Tbody>
       </Table>
       <Box display="flex" justifyContent="space-between" mt={4}>
-        <Text>{`Showing ${page * pageSize} of ${formattedData?.length} results`}</Text>
-        {/* <Pagination
+        <Text>{`Showing ${currentPage * itemsPerPage} of ${
+          formattedData?.length
+        } results`}</Text>
+         <Pagination
           total={totalPages}
-          onChange={setPage}
+          onChange={setCurrentPage}
           dotsIcon={HiMiniChevronDoubleRight}
           siblings={0}
           boundaries={1}
-        /> */}
+        /> 
       </Box>
     </Box>
   );
 };
 
 export default DataTable;
-

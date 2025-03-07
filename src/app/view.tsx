@@ -9,8 +9,8 @@ const LayoutView = ({ children }: { children: ReactNode }) => {
       <Navbar />
       <Flex w="full" h="full" pt="20">
         <SideBar />
-        <Stack w='full' justify='center' align='center'>
-            <Box w='full' mx='auto' maxW={{ xl: '80rem' }}>
+        <Stack w='full' justify='center' align='center' ml={{ lg: '263px' }}>
+            <Box w='full'>
               {children}
             </Box>
         </Stack>

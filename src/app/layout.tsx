@@ -3,6 +3,7 @@ import "./globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LayoutView from "./view";
+import customTheme from "@/theme";
 const queryClient = new QueryClient();
 
 export default function RootLayout({
@@ -13,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
-        <ChakraProvider>
+        <ChakraProvider theme={customTheme}>
           <QueryClientProvider client={queryClient}>
             <LayoutView>{children}</LayoutView>
           </QueryClientProvider>

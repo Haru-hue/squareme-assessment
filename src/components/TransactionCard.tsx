@@ -1,6 +1,6 @@
-import React from 'react'
-import { Box, Text, VStack } from '@chakra-ui/react'
-import { formatDate } from '@/utils/formatDate';
+import React from "react";
+import { Box, Flex, Text, VStack } from "@chakra-ui/react";
+import { formatDate } from "@/utils/formatDate";
 
 interface TransactionDetails {
   amount: number;
@@ -12,21 +12,50 @@ interface TransactionDetails {
 
 const TransactionCard = ({ details }: { details: TransactionDetails }) => {
   return (
-    <Box borderWidth="1px" w="full" h="159px" rounded="md" p={2}>
+    <Box borderWidth="1px" w="full" rounded="md" p={2}>
       <VStack spacing={2} align="stretch">
-        <Box borderBottomWidth="1px" h="40px" display="flex" justifyContent="space-between" alignItems="center" px={2}>
+        <Flex
+          borderBottomWidth="1px"
+          h="40px"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          px={2}
+        >
           <Text fontSize="xs">Amount:</Text>
           <Text fontSize="xs">₦ {details?.amount}</Text>
-        </Box>
-        <Box borderBottomWidth="1px" h="40px" display="flex" justifyContent="space-between" alignItems="center" px={2}>
+        </Flex>
+        <Box
+          borderBottomWidth="1px"
+          h="40px"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          px={2}
+        >
           <Text fontSize="xs">Transaction type:</Text>
           <Text fontSize="xs">{details?.transaction_type}</Text>
         </Box>
-        <Box borderBottomWidth="1px" h="40px" display="flex" justifyContent="space-between" alignItems="center" px={2}>
+        <Box
+          borderBottomWidth="1px"
+          h="40px"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          px={2}
+        >
           <Text fontSize="xs">Date:</Text>
-          <Text fontSize="xs">{`${formatDate(details?.date ?? "")} ${details?.time}`.trim()}</Text>
+          <Text fontSize="xs">
+            {`${formatDate(details?.date ?? "")} ${details?.time}`.trim()}
+          </Text>
         </Box>
-        <Box h="40px" display="flex" justifyContent="space-between" alignItems="center" px={2}>
+        <Box
+          h="40px"
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          px={2}
+        >
           <Text fontSize="xs">Status:</Text>
           <Box
             display="inline-flex"
@@ -40,7 +69,9 @@ const TransactionCard = ({ details }: { details: TransactionDetails }) => {
             fontSize="xs"
             color={details?.status === "processed" ? "#5DC090" : "#F14156"}
             bg={details?.status === "processed" ? "#EFFDED" : "#FEECEE"}
-            borderColor={details?.status === "processed" ? "#5DC090" : "#F14156"}
+            borderColor={
+              details?.status === "processed" ? "#5DC090" : "#F14156"
+            }
           >
             <Box w={2} h={2} rounded="full" bg="currentColor" mr={2} />
             {details?.status}
@@ -48,7 +79,7 @@ const TransactionCard = ({ details }: { details: TransactionDetails }) => {
         </Box>
       </VStack>
     </Box>
-  )
-}
+  );
+};
 
-export default TransactionCard
+export default TransactionCard;

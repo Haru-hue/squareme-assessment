@@ -1,5 +1,13 @@
 "use client";
- import { Box, Button, Center, Flex, Select, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Select,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import DataTable from "@/components/DataTable";
 import TransactionsComponent from "@/components/TransactionsComponent";
 import React from "react";
@@ -54,20 +62,41 @@ const Transactions = () => {
   }
 
   return (
-    <Box w='full' bg='#FFF' pb='38px'>
+    <Box w="full" bg="#FFF" pb="38px">
       <Flex
         direction={{ base: "column", md: "row" }}
         align="start"
         justify="space-between"
         w="full"
-        borderBottom="1px"
-        borderColor="#E6EAEE"
-        p={{ base: "10px 25px", md: "36px 70px 0 70px" }}
         h={{ md: "91.72px" }}
       >
         {/* desktop */}
-        <Flex justify="space-between" w="full" align="center">
-          <Select name="filter" id="filter" h="auto">
+        <Flex
+          borderBottom="2px solid"
+          borderColor="#E6EAEE"
+          boxShadow="sm"
+          justify="space-between"
+          w="full"
+          align="center"
+          minW={{ md: "calc(100vw - 263px)" }}
+          px={{ base: 4, md: 10 }}
+          pt='24px'
+          pb='16px'
+          flexWrap='wrap'
+        >
+          <Select
+            name="filter"
+            id="filter"
+            h="auto"
+            border="none"
+            outline="none"
+            maxW="max-content"
+            minW='max-content'
+            fontSize="16px"
+            fontWeight={500}
+            pos='relative'
+            mb={{ base: '-2.5rem', md: 'unset' }}
+          >
             <option value="">All Accounts</option>
             <option value="">Transactions</option>
             <option value="">Last 30 days</option>
@@ -85,65 +114,48 @@ const Transactions = () => {
               gap={3}
               w="full"
               textColor="#71717A"
-              display={{ base: "none", sm: "flex" }}
+              justify={{ base: 'end', md: 'start'}}
             >
-              <Text textStyle="base" fontWeight="medium">
-                Select date range:
+              <Text fontWeight="500" whiteSpace='nowrap'>
+                Select Date Range:
               </Text>
               <Button
-                border="1px"
+                border="1px solid"
                 borderColor="#D0D5DD"
                 rounded="8px"
-                textStyle="sm"
+                bg='#fff'
+                color='#71717A'
                 h="40px"
                 px={4}
                 gap={2}
                 leftIcon={<LuCalendarDays />}
+                fontSize='14px'
+                w='full'
+                maxW='253px'
               >
                 June 6, 2023 - Jun 15, 2023
               </Button>
             </Flex>
             <Button
-              border="1px"
+              border="1px solid"
               borderColor="#D0D5DD"
+              bg='#FFF'
               rounded="8px"
-              textColor="#344054"
-              textStyle="sm"
-              w="105px"
+              color="#344054"
+              w='full'
+              maxW='105px'
               h="40px"
               gap={2}
+              fontSize='14px'
+              px={4}
               leftIcon={<FiUploadCloud />}
             >
               Export
             </Button>
           </Flex>
         </Flex>
-        {/* mobile */}
-        <Flex
-          align="center"
-          justify="space-between"
-          gap={3}
-          w="full"
-          textColor="#71717A"
-          display={{ base: "flex", md: "none" }}
-        >
-          <Text textStyle="13px" fontWeight="medium">
-            Select date range:
-          </Text>
-          <Button
-            border="1px"
-            borderColor="#D0D5DD"
-            rounded="8px"
-            textStyle="xs"
-            w="203px"
-            h="40px"
-            px={4}
-          >
-            June 6, 2023 - Jun 15, 2023
-          </Button>
-        </Flex>
       </Flex>
-      <Box display={{ base: "none", lg: "flex" }} w="1098.05px" h="525px" mx="auto">
+      <Box display={{ base: "none", lg: "flex" }} w="full" h="525px" mx="auto">
         <DataTable transactions={data} />
       </Box>
       <Box display={{ base: "block", lg: "none" }} w="full" h="full" mx="auto">
@@ -154,4 +166,3 @@ const Transactions = () => {
 };
 
 export default Transactions;
-

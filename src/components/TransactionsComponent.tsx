@@ -8,10 +8,10 @@ const TransactionsComponent = ({
 }) => {
   return (
     <Box w="full" h="full" px={6} pt={10}>
-      <Heading size="md" mb={3}>
+      <Heading fontFamily='Inter' size="md" mb={3}>
         Transactions
       </Heading>
-      <VStack spacing={5} align="start">
+      <VStack w='full' spacing={5} align="start">
         {transactions?.map((item: Transaction, i: number) => (
           <TransactionCard key={i} details={item} />
         ))}
