@@ -34,7 +34,9 @@ const SideBar = ({ navbarModal }: { navbarModal: UseDisclosureProps }) => {
           placement="left"
         >
           <DrawerOverlay />
-          <DrawerContent>
+          <DrawerContent bg="white"
+          borderRight="1px solid"
+          borderColor="#E6EAEE">
             <SideBarContent />
           </DrawerContent>
         </Drawer>
@@ -45,7 +47,7 @@ const SideBar = ({ navbarModal }: { navbarModal: UseDisclosureProps }) => {
           minW="263px"
           minH="100vh"
           bg="white"
-          borderRight="1px"
+          borderRight="1px solid"
           borderColor="#E6EAEE"
         >
           <SideBarContent/>
@@ -82,6 +84,7 @@ const SideBarContent = () => {
               w="full"
               textTransform="capitalize"
               fontSize="15px"
+              fontFamily='Inter'
               bg={
                 pathname === `/${item.link}` || pathname === item.link
                   ? "#3976E8"

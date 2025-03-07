@@ -16,7 +16,7 @@ import { LuCalendarDays } from "react-icons/lu";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "@/api/transaction";
 import Loader from "@/components/Loader";
-
+import { CSVLink } from "react-csv";
 const Transactions = () => {
   const { data, error, isError, isLoading } = useQuery({
     queryKey: ["transactions"],
@@ -27,7 +27,7 @@ const Transactions = () => {
 
   if (isLoading)
     return (
-      <Center w="full" h="40vh">
+      <Center w="full" h="100vh">
         <Loader />
       </Center>
     );
@@ -61,6 +61,17 @@ const Transactions = () => {
     );
   }
 
+  const csvData = data.map((item: TransactionApiResponse) => ({
+    Amount: `₦${item.amount.toLocaleString()}`,
+    "Transaction ID": `TR_${
+      (item?.transaction_id?.$oid as string) || item?.transaction_id || ""
+    }`,
+    "Transaction Type": item.transaction_type,
+    Date: item.date,
+    Time: item.time,
+    Status: item.status,
+  }));
+
   return (
     <Box w="full" bg="#FFF" pb="38px">
       <Flex
@@ -80,9 +91,9 @@ const Transactions = () => {
           align="center"
           minW={{ md: "calc(100vw - 263px)" }}
           px={{ base: 4, md: 10 }}
-          pt='24px'
-          pb='16px'
-          flexWrap='wrap'
+          pt="24px"
+          pb="16px"
+          flexWrap="wrap"
         >
           <Select
             name="filter"
@@ -91,11 +102,11 @@ const Transactions = () => {
             border="none"
             outline="none"
             maxW="max-content"
-            minW='max-content'
+            minW="max-content"
             fontSize="16px"
             fontWeight={500}
-            pos='relative'
-            mb={{ base: '-2.5rem', md: 'unset' }}
+            pos="relative"
+            mb={{ base: "-2.5rem", md: "unset" }}
           >
             <option value="">All Accounts</option>
             <option value="">Transactions</option>
@@ -114,44 +125,50 @@ const Transactions = () => {
               gap={3}
               w="full"
               textColor="#71717A"
-              justify={{ base: 'end', md: 'start'}}
+              justify={{ base: "end", md: "start" }}
             >
-              <Text fontWeight="500" whiteSpace='nowrap'>
+              <Text fontWeight="500" whiteSpace="nowrap">
                 Select Date Range:
               </Text>
               <Button
                 border="1px solid"
                 borderColor="#D0D5DD"
                 rounded="8px"
-                bg='#fff'
-                color='#71717A'
+                bg="#fff"
+                color="#71717A"
                 h="40px"
                 px={4}
                 gap={2}
                 leftIcon={<LuCalendarDays />}
-                fontSize='14px'
-                w='full'
-                maxW='253px'
+                fontSize="14px"
+                w="full"
+                maxW="253px"
               >
                 June 6, 2023 - Jun 15, 2023
               </Button>
             </Flex>
-            <Button
-              border="1px solid"
-              borderColor="#D0D5DD"
-              bg='#FFF'
-              rounded="8px"
-              color="#344054"
-              w='full'
-              maxW='105px'
-              h="40px"
-              gap={2}
-              fontSize='14px'
-              px={4}
-              leftIcon={<FiUploadCloud />}
+            <CSVLink
+              data={csvData}
+              filename={"transactions.csv"}
+              style={{ textDecoration: "none" }}
             >
-              Export
-            </Button>
+              <Button
+                border="1px solid"
+                borderColor="#D0D5DD"
+                bg="#FFF"
+                rounded="8px"
+                color="#344054"
+                w="full"
+                maxW="105px"
+                h="40px"
+                gap={2}
+                fontSize="14px"
+                px={4}
+                leftIcon={<FiUploadCloud />}
+              >
+                Export
+              </Button>
+            </CSVLink>
           </Flex>
         </Flex>
       </Flex>

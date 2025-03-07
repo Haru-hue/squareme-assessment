@@ -44,11 +44,6 @@ const DataTable = ({ transactions }: { transactions: TransactionApiResponse[] })
     currentPage * itemsPerPage
   );
 
-  // Handle page change
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
   // Toggle row selection
   const allSelected =
     selectedRows.length === paginatedData.length && paginatedData.length > 0;

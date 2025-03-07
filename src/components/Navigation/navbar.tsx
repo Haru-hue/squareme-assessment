@@ -6,6 +6,7 @@ import {
   Stack,
   Text,
   UseDisclosureReturn,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NotificationIcon from "@/assets/bell.svg";
@@ -13,17 +14,15 @@ import Logo from "@/assets/Logo.png";
 import { FaArrowLeft } from "react-icons/fa6";
 import { usePathname } from "next/navigation";
 import { IoMdArrowDropdown } from "react-icons/io";
-const Navbar = ({
-  navbarModal,
-}: {
-  navbarModal: UseDisclosureReturn;
-}) => {
-  const pathname = usePathname()
+const Navbar = ({ navbarModal }: { navbarModal: UseDisclosureReturn }) => {
+  const [isMobile] = useMediaQuery("(max-width: 991px)");
+
+  const pathname = usePathname();
   const noTitle = pathname === "/transactions";
   return (
     <Stack
       w="full"
-      h={{ base: '60px', md: '80px' }}
+      h={{ base: "60px", md: "80px" }}
       bg="white"
       color="black"
       borderBottom="1px solid"
@@ -31,11 +30,21 @@ const Navbar = ({
       px={{ base: "25px", md: "9" }}
       shadow="sm"
       position="fixed"
-      justify='center'
+      justify="center"
       zIndex={50}
     >
-      {noTitle ? (
-        <Flex align='center' gap='12px' as={Link} href='/' textDecoration='none'>
+      {noTitle && isMobile ? (
+        <Flex
+          align="center"
+          gap="12px"
+          as={Link}
+          href="/"
+          textDecoration="none"
+          _hover={{
+            textDecor: "none",
+            color: "black",
+          }}
+        >
           <FaArrowLeft />
           <Text fontWeight={500}>Transactions</Text>
         </Flex>
@@ -67,7 +76,7 @@ const Navbar = ({
               >
                 GA
               </Box>
-              <Box display={{ base: 'none', lg: 'block' }}>
+              <Box display={{ base: "none", lg: "block" }}>
                 <IoMdArrowDropdown />
               </Box>
             </Flex>

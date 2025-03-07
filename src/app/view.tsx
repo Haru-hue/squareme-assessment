@@ -1,5 +1,6 @@
+"use client";
 import { ReactNode } from "react";
-import { Box, Container, Flex, Stack, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Stack, useDisclosure } from "@chakra-ui/react";
 import Navbar from "@/components/Navigation/navbar";
 import SideBar from "@/components/Navigation/sidebar";
 
