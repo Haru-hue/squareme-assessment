@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "@/api/transaction";
-
 interface TransactionState {
   data: TransactionApiResponse[]
   status: "idle" | "loading" | "succeeded" | "failed";
@@ -33,7 +32,7 @@ const transactionSlice = createSlice({
   initialState,
   reducers: {
     setItemState: (state, action: PayloadAction<TransactionApiResponse[]>) => {
-      state.items = action.payload;
+      state.data = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -44,7 +43,7 @@ const transactionSlice = createSlice({
       })
       .addCase(fetchTransactionsData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload.data;
+        state.data = action.payload.data;
       })
       .addCase(fetchTransactionsData.rejected, (state, action) => {
         state.status = "failed";

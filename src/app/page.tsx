@@ -16,19 +16,20 @@ import { BsCopy } from "react-icons/bs";
 import { useState } from "react";
 import Loader from "@/components/Loader";
 import { BarChart } from "@/components/BarChart";
+import { useAppSelector } from "@/store/hooks";
+import { AxiosError } from "axios";
 
 export default function Home() {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["barChart"],
-    queryFn: fetchBarChartData,
-    staleTime: 60 * 1000, // 1 minute
-    refetchInterval: 60 * 1000, // 1 minute
-  });
+  const state = useAppSelector((state) => state.chart);
+  const isLoading = state.status === "loading";
+  const isError = state.status === "failed";
+  const data = state.data;
+  const error = state.error as AxiosError | null;
   const [activeFilter, setActiveFilter] = useState("Last 7 days");
 
   if (isLoading)
     return (
-      <Center h='100vh'>
+      <Center h="100vh">
         <Loader />
       </Center>
     );
@@ -106,8 +107,7 @@ export default function Home() {
                 bg="#9F56D433"
                 color="#9F56D4"
                 rounded="md"
-                leftIcon={<BsCopy color="#9F56D4" />
-                }
+                leftIcon={<BsCopy color="#9F56D4" />}
               >
                 Copy
               </Button>
@@ -124,7 +124,7 @@ export default function Home() {
           borderColor="#E4E4E7"
           rounded="lg"
           p={6}
-          w='full'
+          w="full"
         >
           <Flex justify="space-between" mb={6}>
             <HStack spacing={6}>
@@ -218,10 +218,10 @@ export default function Home() {
           <Select
             h="30px"
             fontSize="xs"
-            border='1px solid'
+            border="1px solid"
             borderColor="#C4C8D3"
             rounded="full"
-            maxW='max-content'
+            maxW="max-content"
           >
             <option value="weekly">Weekly</option>
             <option value="Last 7 days">Last 7 days</option>

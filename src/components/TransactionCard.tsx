@@ -2,15 +2,7 @@ import React from "react";
 import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import { formatDate } from "@/utils/formatDate";
 
-interface TransactionDetails {
-  amount: number;
-  transaction_type: string;
-  date: string;
-  time: string;
-  status: string;
-}
-
-const TransactionCard = ({ details }: { details: TransactionDetails }) => {
+const TransactionCard = ({ details }: { details: TransactionApiResponse }) => {
   return (
     <Box borderWidth="1px" w="full" rounded="md" p={2}>
       <VStack spacing={2} align="stretch">

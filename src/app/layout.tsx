@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <Head>
-        <title>My App</title>
+        <title>Joshua Uko - Squareme Assessment</title>
         <meta name="description" content="This is my app description" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import transactionsReducer from './features/transactionData';
-import wishlistReducer from './features/wishlistSlice';
-import categoryReducer from './features/category';
+import chartReducer from './features/chart';
 import { initializeMiddleware } from './middleware';
 
 export const store = configureStore({
   reducer: {
-    // chart: chartReducer,
+    chart: chartReducer,
     transactions: transactionsReducer
   },
   middleware: (getDefaultMiddleware) =>

@@ -13,16 +13,16 @@ import TransactionsComponent from "@/components/TransactionsComponent";
 import React from "react";
 import { FiUploadCloud } from "react-icons/fi";
 import { LuCalendarDays } from "react-icons/lu";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTransactions } from "@/api/transaction";
 import Loader from "@/components/Loader";
 import { CSVLink } from "react-csv";
 import { useAppSelector } from "@/store/hooks";
+import { AxiosError } from "axios";
 const Transactions = () => {
   const state = useAppSelector((state) => state.transactions)  
-  const isLoading = state.transactions.status === "loading"
-  const isError = state.transactions.status === "error"
-  const data = state.transactions.data
+  const isLoading = state.status === "loading"
+  const isError = state.status === "failed"
+  const data = state.data
+  const error = state.error as AxiosError | null;
 
   if (isLoading)
     return (
@@ -31,10 +31,7 @@ const Transactions = () => {
       </Center>
     );
   if (isError) {
-    const errorMessage =
-      "status" in error
-        ? `Error: ${error.status}`
-        : error.message || "An unknown error occurred";
+    const errorMessage = error?.message || "An unknown error occurred";
     return (
       <Center w="full" mt={4}>
         <Box
